@@ -9,4 +9,5 @@ public interface IServiceTransfert {
     Transfert createTransfert(TransfertDto transfertDto) throws Exception;
     List<Transfert> retrieveTransfertByClient(int clientId);
     Transfert retrieveTransfertById(int id);
+    List<Transfert> retrieveTransfertByAlias(String alias) throws Exception;
 }

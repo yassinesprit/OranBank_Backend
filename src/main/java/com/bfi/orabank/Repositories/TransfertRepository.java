@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TransfertRepository extends JpaRepository<Transfert,Integer> {
-    List<Transfert> findByAliasClientId(int clientId);
+    List<Transfert> findByExpediteurClientId(int clientId);
+    List<Transfert> findByExpediteurAlias(String alias);
 }

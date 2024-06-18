@@ -13,6 +13,6 @@ public interface IServiceAlias {
     Alias  retrieveAliasById (int idAlias);
 
     Alias loadAliasByClient (int s);
-    Alias loadAliasByCompteBancaireId(int id);
+    Alias loadAliasByCompteBancaireId(int id) throws Exception;
 
 }

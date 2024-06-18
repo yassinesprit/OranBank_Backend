@@ -10,5 +10,6 @@ public interface IServiceCompteBancaire {
     CompteBancaire findCompteById(int compteId);
     CompteBancaire findComptebyAlias(String s);
     List<CompteBancaire> findCompteBancaireByUsername(String s);
+    List<CompteBancaire> findFreeCompteBancaireByUsername(String s);
 
 }

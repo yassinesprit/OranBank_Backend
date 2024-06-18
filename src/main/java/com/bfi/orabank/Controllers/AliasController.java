@@ -42,7 +42,7 @@ public class AliasController {
     }
 
     @GetMapping("/comptebancaire/{id}")
-    ResponseEntity<Object> loadAliasByCompteBancaireId(@PathVariable int id) {
+    ResponseEntity<Object> loadAliasByCompteBancaireId(@PathVariable int id) throws Exception {
         Assert.notNull(id,"parametre est null");
         return ResponseEntity.ok(serviceAlias.loadAliasByCompteBancaireId(id));
     }

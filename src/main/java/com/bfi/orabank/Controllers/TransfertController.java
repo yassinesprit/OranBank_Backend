@@ -37,4 +37,10 @@ public class TransfertController {
         Assert.notNull(id,"objet est null");
         return ResponseEntity.ok(serviceTransfert.retrieveTransfertById(id));
     }
+
+    @GetMapping("/alias/{alias}")
+    ResponseEntity<Object> retrieveTransfertByAlias(@PathVariable String alias) throws Exception {
+        Assert.notNull(alias,"alias est null");
+        return ResponseEntity.ok(serviceTransfert.retrieveTransfertByAlias(alias));
+    }
 }

@@ -12,10 +12,10 @@ public interface IServiceUtilisateur {
     List<UserResponse> retrieveUsers();
 
     UserResponse  retrieveUserById(int idUser);
+    Utilisateur loadUserByUsername(String s);
 
     List<UserResponse> getUserbyRole(String role);
 
-    Utilisateur loadUserByUsername(String s);
 
     String getUserRoleByUsername(String username);
     Client getClientByUser(String username);

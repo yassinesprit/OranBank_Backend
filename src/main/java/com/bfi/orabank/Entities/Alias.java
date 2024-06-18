@@ -25,6 +25,7 @@ public class Alias implements Serializable {
     String description;
     Date dateDeCreation;
     Boolean statut;
+    String telephone;
     @Enumerated(EnumType.STRING)
     TypeAlias type;
 
@@ -32,11 +33,22 @@ public class Alias implements Serializable {
     @JsonIgnore
     Client client;
 
-    @OneToOne(mappedBy = "alias")
+    @OneToOne
     @JsonIgnore
     CompteBancaire compteBancaire;
 
-    @OneToMany(mappedBy = "alias")
+    @OneToMany(mappedBy = "destinataire")
     @JsonIgnore
-    List<Transfert> transferts;
+    List<Transfert> transferts_dest;
+    @OneToMany(mappedBy = "expediteur")
+    @JsonIgnore
+    List<Transfert> transferts_exp;
+
+
+    @OneToMany(mappedBy = "destinataire")
+    @JsonIgnore
+    List<DemandePaiement> demandes_dest;
+    @OneToMany(mappedBy = "expediteur")
+    @JsonIgnore
+    List<DemandePaiement> demandes_exp;
 }

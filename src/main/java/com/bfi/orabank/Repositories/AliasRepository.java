@@ -7,4 +7,5 @@ public interface AliasRepository extends JpaRepository<Alias,Integer> {
     Alias findByClientId (int idClient);
     Alias findByCompteBancaireId (int idCompte);
     Alias findByAlias(String s);
+
 }

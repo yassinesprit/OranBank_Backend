@@ -1,5 +1,6 @@
 package com.bfi.orabank.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,10 +26,16 @@ public class CompteBancaire implements Serializable {
     float solde;
     Date dateDeCreation;
     Boolean statut;
+    String Iban;
 
-    @OneToOne
+
+    @OneToOne(mappedBy = "compteBancaire")
     Alias alias;
 
     @ManyToOne
     Client client;
+
+    @OneToMany(mappedBy = "compteBancaire")
+    List<Contact> contact;
+
 }
