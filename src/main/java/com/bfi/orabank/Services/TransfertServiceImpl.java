@@ -5,6 +5,7 @@ import com.bfi.orabank.Entities.*;
 import com.bfi.orabank.Repositories.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,6 +20,8 @@ public class TransfertServiceImpl implements IServiceTransfert {
     AliasRepository aliasRepository;
     DeviseRepository deviseRepository;
     CompteBancaireRepository compteBancaireRepository;
+    NotificationRepository notificationRepository;
+    private SimpMessagingTemplate template;
 
 
     @Override
@@ -32,10 +35,10 @@ public class TransfertServiceImpl implements IServiceTransfert {
         if (transfertDto.getTypeTransfert().equals(TypeTransfert.ParAlias) && aliasRepository.findByAlias(transfertDto.getDestinataireAlias()) == null) {
             throw new Exception("Alias est null");
         }
-        if (transfertDto.getTypeTransfert().equals(TypeTransfert.ParIBAN) && transfertDto.getReferenceBanque()==null) {
+        if (transfertDto.getTypeTransfert().equals(TypeTransfert.ParIBAN) && transfertDto.getReferenceBanque() == null) {
             throw new Exception("Iban est null");
         }
-        if (transfertDto.getTypeTransfert().equals(TypeTransfert.ParAutreCompte) && transfertDto.getNomInstitutFin()==null) {
+        if (transfertDto.getTypeTransfert().equals(TypeTransfert.ParAutreCompte) && transfertDto.getNomInstitutFin() == null) {
             throw new Exception("Iban est null");
         }
         if (deviseRepository.findById(transfertDto.getIdDevise()).orElse(null) == null) {
@@ -69,7 +72,24 @@ public class TransfertServiceImpl implements IServiceTransfert {
             transfert.setNomBanque(null);
             transfert.setNomInstitutFin(transfertDto.getNomInstitutFin());
         }
-        return transfertRepository.save(transfert);
+        // Enregistrement du transfert
+        Transfert savedTransfert = transfertRepository.save(transfert);
+
+        // Création et envoi de la notification
+        Notification notification = new Notification();
+        notification.setMessage("Un nouveau transfert a été créé");
+        notification.setDate(new Date());
+        notification.setTransfert(savedTransfert);
+        Notification savedNotification = notificationRepository.save(notification);
+
+        // Envoi de la notification à l'expéditeur et au destinataire
+        String expediteurAlias = transfert.getExpediteur().getAlias();
+        String destinataireAlias = transfert.getDestinataire().getAlias();
+        template.convertAndSendToUser(expediteurAlias, "/queue/notifications", savedNotification);
+        log.info("Envoi de la notification à l'expéditeur : " + expediteurAlias);
+        template.convertAndSendToUser(destinataireAlias, "/queue/notifications", savedNotification);
+        log.info("Envoi de la notification au destinataire : " + destinataireAlias);
+        return savedTransfert;
     }
 
     @Override

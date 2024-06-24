@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -32,28 +31,31 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-            Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-                    config.addAllowedOrigin("http://localhost:4200");
-                    return config;
-                }))
-                .authorizeHttpRequests(authz -> authz.requestMatchers("/authentication/**").permitAll()
+        http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(request -> {
+            CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
+            config.addAllowedOrigin("http://localhost:4200");
+            return config;
+        })).authorizeHttpRequests(authz ->
+                authz
+                        .requestMatchers("/authentication/**")
+                        .permitAll()
+                        .requestMatchers("/ws/**")
+                        .permitAll()
                         .anyRequest().authenticated())
-                .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->
+                        session
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout((logout) -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login") // Redirect after successful logout
-                        .invalidateHttpSession(true) // Invalidate session
-                        .logoutSuccessHandler((request, response, authentication) -> {
-                            request.getHeader("Authorization"); // add Accept header
-                            log.info("teeeeeeest"+request.getHeader("Authorization"));
-                            SecurityContextHolder.clearContext();}))
+                .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login") // Redirect after successful logout
+                .invalidateHttpSession(true) // Invalidate session
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    request.getHeader("Authorization"); // add Accept header
+                    log.info("teeeeeeest" + request.getHeader("Authorization"));
+                    SecurityContextHolder.clearContext();
+                }))
 
         ;
         return http.build();
