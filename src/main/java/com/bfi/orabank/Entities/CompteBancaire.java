@@ -36,6 +36,7 @@ public class CompteBancaire implements Serializable {
     Client client;
 
     @OneToMany(mappedBy = "compteBancaire")
+    @JsonIgnore
     List<Contact> contact;
 
 }

@@ -22,6 +22,7 @@ public class AliasController {
         return ResponseEntity.accepted().body(serviceAlias.createAlias(alias));
     }
 
+
     @GetMapping
     ResponseEntity<Object> retrieveAliass (){
         return ResponseEntity.ok(serviceAlias.retrieveAliass());

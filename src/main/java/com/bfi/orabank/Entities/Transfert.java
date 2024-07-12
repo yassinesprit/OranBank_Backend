@@ -21,7 +21,7 @@ public class Transfert implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String reference;
-    String referenceBanque;
+    String referenceBanque;//iban
     String description;
     float fraisDeTransaction;
     float montant;

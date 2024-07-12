@@ -26,10 +26,10 @@ public class UtilisateurController {
 
     @GetMapping
     public ResponseEntity<Object> retrieveUsers() {
-        List<UserResponse> responseList=iUserService.retrieveUsers();
-        if(responseList==null){
+        List<Utilisateur> responseList=iUserService.retrieveAllUsers();
+        /*if(responseList==null){
             throw new NotFoundException("Resource not found");
-        }
+        }*/
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseList) ;
     }
 

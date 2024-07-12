@@ -33,6 +33,11 @@ public class UtilisateurServiceImpl implements IServiceUtilisateur{
     }
 
     @Override
+    public List<Utilisateur> retrieveAllUsers() {
+        return utilisateurRepository.findAll();
+    }
+
+    @Override
     public UserResponse retrieveUserById(int idUser) {
         Utilisateur optionalUser = utilisateurRepository.findById(idUser).orElse(null);
 

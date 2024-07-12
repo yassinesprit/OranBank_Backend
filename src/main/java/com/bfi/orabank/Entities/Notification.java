@@ -14,10 +14,16 @@ public class Notification implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    String titre;
     String message;
-    Boolean is_read;
+    @Enumerated(EnumType.STRING)
+    TypeNotification type;
+    @Enumerated(EnumType.STRING)
+    StatusNotification status;
+    Boolean lu;
     Date date;
-
+    String expediteurAlias;
+    String destinataireAlias;
     @ManyToOne
     DemandePaiement demandePaiement ;
 

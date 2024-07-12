@@ -1,5 +1,6 @@
 package com.bfi.orabank.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,6 @@ public class Contact implements Serializable {
 
     @ManyToOne
     CompteBancaire compteBancaire;
+    @ManyToOne
+    Utilisateur utilisateur;
 }

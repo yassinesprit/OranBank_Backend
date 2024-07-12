@@ -37,13 +37,16 @@ public class Utilisateur implements UserDetails {
     @ManyToOne
     Client client;
 
+    @OneToMany(mappedBy = "utilisateur")
+    @JsonIgnore
+    List<Contact> contact;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_"+ this.getRole()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.getRole()));
     }
 
     @Override

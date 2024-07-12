@@ -5,7 +5,8 @@ import com.bfi.orabank.Entities.Utilisateur;
 
 public class UserMapper {
     public static UserResponse mapToUserResponse(Utilisateur user) {
-        UserResponse userResponse= UserResponse.builder()
+
+        return UserResponse.builder()
                 .id(user.getId())
                 .role(user.getRole())
                 .statut(user.getStatut())
@@ -16,7 +17,5 @@ public class UserMapper {
                 .username(user.getUsername())
                 .langue(user.getLangue())
                 .build();
-
-        return userResponse;
     }
 }

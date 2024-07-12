@@ -10,6 +10,7 @@ import java.util.List;
 public interface IServiceUtilisateur {
 
     List<UserResponse> retrieveUsers();
+    List<Utilisateur> retrieveAllUsers();
 
     UserResponse  retrieveUserById(int idUser);
     Utilisateur loadUserByUsername(String s);

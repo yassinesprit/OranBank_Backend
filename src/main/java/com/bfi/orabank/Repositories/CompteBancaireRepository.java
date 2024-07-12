@@ -8,5 +8,6 @@ import java.util.List;
 public interface CompteBancaireRepository extends JpaRepository<CompteBancaire,Integer> {
     List<CompteBancaire> findByClientId(int clientId);
     CompteBancaire findByAliasAlias(String s);
+    CompteBancaire findByNumeroCompte(String s);
 
 }

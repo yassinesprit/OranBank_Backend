@@ -20,6 +20,7 @@ public class DemandePaiement implements Serializable {
     float montant;
     Date dateCreation;
     Date dateModif;
+    String description;
     @Enumerated(EnumType.STRING)
     Etat etatDemande;
 
